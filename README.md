@@ -62,3 +62,56 @@ export PATH=/home/vagrant/bin:$PATH
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
 docker run hello-world
 ```
+
+## Demo
+
+The demo script can be run on both VMs so you can see the differences
+
+### Docker CLI as root
+
+`ubuntu` user is not part of `docker` group, so it needs `sudo` to access the docker socket:
+
+
+```sh
+# On rootful VM
+sudo su - ubuntu
+docker ps
+sudo docker ps
+```
+
+`vagrant` user is part of `docker` group and can access docker socket directly:
+
+```sh
+# On rootful VM
+docker ps
+```
+
+### Run a simple container
+
+```sh
+docker run hello-world
+```
+
+Overlays are stored in different locations:
+
+```sh
+ls -al ~/.local/share/docker/overlay
+sudo ls -al /var/lib/docker/overlay2
+```
+
+### Expose a port
+
+Expose a port of range `1000+`
+
+```sh
+docker run nginx -d -p 32768:80 nginx:alpine
+curl localhost:32768
+docker rm -f nginx
+```
+
+Expose a port of range `1000-`
+
+```sh
+docker run --name nginx -d -p 80:80 nginx:alpine
+docker rm -f nginx
+```

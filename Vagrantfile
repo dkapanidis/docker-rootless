@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.define "rootless" do |rootless|
-    rootless.vm.box = "ubuntu/trusty64"
+    rootless.vm.box = "ubuntu/xenial64"
   end
 
   config.vm.define "rootful" do |rootful|
