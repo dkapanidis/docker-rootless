@@ -5,6 +5,5 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "rootful" do |rootful|
     rootful.vm.box = "ubuntu/xenial64"
-    #rootful.vm.provision "docker"
   end
 end
